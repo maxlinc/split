@@ -20,6 +20,7 @@ module Split
     end
 
     post '/:experiment' do
+      protected!
       @experiment = Split::Experiment.find(params[:experiment])
       @alternative = Split::Alternative.new(params[:alternative], params[:experiment])
       @experiment.winner = @alternative.name
@@ -27,12 +28,14 @@ module Split
     end
 
     post '/reset/:experiment' do
+      protected!
       @experiment = Split::Experiment.find(params[:experiment])
       @experiment.reset
       redirect url('/')
     end
 
     delete '/:experiment' do
+      protected!
       @experiment = Split::Experiment.find(params[:experiment])
       @experiment.delete
       redirect url('/')
